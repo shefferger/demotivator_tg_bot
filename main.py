@@ -2,6 +2,7 @@ from telebot import async_telebot
 import signal
 import os
 import asyncio
+import image
 
 
 class App:
