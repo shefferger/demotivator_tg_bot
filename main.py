@@ -1,3 +1,5 @@
+import uuid
+
 from telebot import async_telebot
 import signal
 import os
@@ -31,14 +33,24 @@ class App:
 
         @self.bot.message_handler(content_types=['photo', 'document'])
         async def photo_handler(msg):
+            if msg.caption is None:
+                await self.bot.reply_to(message=msg, text='Вы забыли написать текст, попробуйте еще раз')
+                return
+            file_id, img_result = None, None
             if msg.content_type == 'photo' and msg.caption is not None:
-                print('its photo with', msg.aption)
+                file_id = msg.photo[-1].file_id
             elif msg.content_type == 'document' and msg.caption is not None:
                 if msg.document.mime_type in ('image/png', 'image/pjpeg', 'image/jpeg', 'image/gif'):
-                    print(f'its a doc {msg.document.mime_type} with', msg.caption)
-            print(msg)
+                    file_id = msg.document.file_id
             cid = msg.chat.id
-            await self.bot.reply_to(message=msg, text=msg.text)
+            if file_id:
+                file_info = await self.bot.get_file(file_id)
+                img = await self.bot.download_file(file_info.file_path)
+                img_result = image.make_demotivator(img=img, text=msg.caption)
+            if img_result:
+                await self.bot.send_photo(chat_id=cid, photo=img_result)
+            else:
+                await self.bot.reply_to(message=msg, text='Произошла ошибка')
 
 
 if __name__ == '__main__':
