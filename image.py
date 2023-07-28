@@ -37,14 +37,3 @@ def make_demotivator(img: bytes, text: str):
     pimg.save(fp=buffer, format=file_type)
     return buffer.getvalue()
 
-
-def test():
-    with open(mode='rb', file='samples/test.png') as fd:
-        file = fd.read()
-        img = make_demotivator(img=file, text='hello world! yay! its a good day today, isnt it? i really like it ')
-        with open(mode='wb', file='/mnt/c/Users/sheff/Desktop/res/sample-out.png') as fd2:
-            fd2.write(img)
-
-
-if __name__ == '__main__':
-    test()
