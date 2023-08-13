@@ -3,7 +3,7 @@ import textwrap
 import io
 
 
-def make_demotivator(img: bytes, text: str):
+async def make_demotivator(img: bytes, text: str):
     pimg = Image.open(fp=io.BytesIO(img))
     for i in pimg.size:
         if i < 100:

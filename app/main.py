@@ -1,5 +1,3 @@
-import uuid
-
 from telebot import async_telebot
 import signal
 import os
@@ -54,7 +52,7 @@ class App:
             if file_id:
                 file_info = await self.bot.get_file(file_id)
                 img = await self.bot.download_file(file_info.file_path)
-                img_result = image.make_demotivator(img=img, text=msg.caption)
+                img_result = await image.make_demotivator(img=img, text=msg.caption)
             if img_result:
                 await self.bot.send_photo(chat_id=cid, photo=img_result)
             else:
