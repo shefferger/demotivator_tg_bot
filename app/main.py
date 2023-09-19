@@ -48,7 +48,6 @@ class App:
                 if msg.document.mime_type in ('image/png', 'image/pjpeg', 'image/jpeg', 'image/gif'):
                     file_id = msg.document.file_id
             cid = msg.chat.id
-            print(f'cid: {cid}, text: {msg.caption}')
             if file_id:
                 file_info = await self.bot.get_file(file_id)
                 img = await self.bot.download_file(file_info.file_path)
